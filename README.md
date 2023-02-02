@@ -4,8 +4,9 @@
 - 기존 서비스인 웹에서 구매가 불가능한 당근마켓에서 구매하기 기능 추가, 기부 기능, 경매 기능을 추가했습니다.
 - KAKAO OPEN API 를 활용해서 카카오로 가입할 수 있는 기능을 만들었습니다. 
 
-![PANDA](https://user-images.githubusercontent.com/88180931/216397790-eb537adc-acf5-46e1-ae40-b1f87fd39746.png)
 
+![PANDA](https://user-images.githubusercontent.com/88180931/216397790-eb537adc-acf5-46e1-ae40-b1f87fd39746.png)
+https://testteam.ga/main/index 
 
 ## 📋 사용 기능
 - Spring Framework
