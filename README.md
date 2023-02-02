@@ -6,7 +6,8 @@
 
 
 ![PANDA](https://user-images.githubusercontent.com/88180931/216397790-eb537adc-acf5-46e1-ae40-b1f87fd39746.png)
-https://testteam.ga/main/index 
+
+😉 클릭하시면 이동합니다! https://testteam.ga/main/index 
 
 ## 📋 사용 기능
 - Spring Framework
