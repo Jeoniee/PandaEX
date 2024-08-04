@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PANDA</title>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/icons/PANDA.png">
 <!-- 헤더 -->	
 <%@ include file="../include/header.jsp" %>
 <%@ include file="../include/css.jsp" %>
@@ -38,11 +39,11 @@
 	});
 	
 	
-	function getDate(x,y) {
-		var date1 = new Date(x).getTime();
+	function getDate(y) {
+		var date1 = new Date().getTime();
 		var date2 = new Date(y).getTime();
 		
-		document.write("남은 "+(date1-date2)/(1000*60*60*24)+"일");
+		document.write("남은 "+parseInt((date2-date1)/(1000*60*60*24))+"일");
 	}
 </script>
 </head>
@@ -56,10 +57,12 @@
 				<span style="display:block; margin-bottom:30px; font-size:48px; font-weight:bold;">
 					<img src="/resources/images/icons/icon_concentrated.png">해피판다</span>
 						<c:set var="today" value="<%=new Date()%>" />
-<%--   					 	<fmt:formatDate var="today1" pattern="yyyy년 MM월" value="${today }"/> --%>
-				<p style="font-size:20px; color:#666;"><span class="panda-date" style="font-weight:bold;">${today1 }</span><br> 해피판다를 통해<br>
+  					 	<fmt:formatDate var="today1" pattern="yyyy년 M월 dd일" value="${today }"/>
+							<p style="font-size:20px; color:#666;"><span class="panda-date" style="font-weight:bold;">
+								${today1 }까지</span><br> 해피판다를 통해<br>
 					<span style="color:#28a745; font-weight:bold;">${finishBidInfo.auction_bid_cnt }</span>분이 
-					<span style="color:#28a745; font-weight:bold;">${finishBidInfo.auction_bid_sum }</span>원의 마음을<br> 모아주셨습니다.</p>
+					<span style="color:#28a745; font-weight:bold;">
+						<fmt:formatNumber value="${finishBidInfo.auction_bid_sum }" /></span>원의<br> 마음을 모아주셨습니다.</p>
 			</div>
 		</div>
 	<div class="flex-w flex-sb-m p-b-52">
@@ -83,6 +86,7 @@
                     <option value="2">입찰가&#8595;순</option>
                     <option value="3">마감 임박순</option>
                     <option value="4">조회수순</option>
+                    <option value="5">종료된 경매</option>
                 </select>
             </div>
 	
@@ -110,31 +114,54 @@
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-pic hov-img0">
-								<a href="/auction/a_read?auction_no=${avo.auction_no }&user_no=${avo.user_no}">
-								<img src="${avo.thumbnail }" alt="IMG-PRODUCT" style="width: 280px; height: 250px;"></a>
+								<c:if test="${avo.auction_bidok eq 0}">
+									<a href="/auction/a_read?auction_no=${avo.auction_no }&user_no=${avo.user_no}">
+										<img src="${avo.thumbnail }" alt="IMG-PRODUCT" style="width: 290px; height: 250px;"></a>
+								</c:if>
+								<c:if test="${avo.auction_bidok eq 1}">
+										<figure style="margin: 0;">
+											<img src="${avo.thumbnail }" alt="IMG-PRODUCT" style="width: 290px; height: 250px; filter: brightness(50%);">
+											<figcaption style="position:absolute; font-weight:bold; text-align:center; top:0; width:100%; color:white; margin-top:110px; font-family:Poppins-Regular; font-size:28px;">
+												경매종료</figcaption>
+										</figure>		
+								</c:if>
 							</div>
 	
 							<div class="block2-txt flex-w flex-t p-t-14">
-								<div class="block2-txt-child1 flex-col-l ">
-									<a href="/auction/a_read?auction_no=${avo.auction_no }&user_no=${avo.user_no}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" 
-									style="font-weight:bold; font-size:17px; color:darkslategray;">
-										${avo.auction_title }
-									</a>
-	
+								<div class="block2-txt-child1 flex-col-l " style="margin-right:-20px;">
+									<c:if test="${avo.auction_bidok eq 0}">
+										<a href="/auction/a_read?auction_no=${avo.auction_no }&user_no=${avo.user_no}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" 
+										style="font-weight:bold; font-size:17px; color:darkslategray;">
+											${avo.auction_title }
+										</a>
+									</c:if>
+									<c:if test="${avo.auction_bidok eq 1}">
+										<a class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" 
+										style="font-weight:bold; font-size:17px; color:darkslategray;">
+											${avo.auction_title }
+										</a>
+									</c:if>
+									
 									<span class="stext-105 cl3" style="font-size:17px; color:darkslategray;">
-										현재 <span style="color:#28a745;"><fmt:formatNumber value="${avo.auction_price }"/></span>원
+										<c:if test="${avo.auction_bid eq 0}">
+											현재 <span style="color:#28a745;"><fmt:formatNumber value="${avo.auction_price }"/></span>원
+										</c:if>
+										<c:if test="${avo.auction_bid ne 0}">
+											현재 <span style="color:#28a745;"><fmt:formatNumber value="${avo.auction_bid }"/></span>원
+										</c:if>
 									</span>
 									<span class="stext-105 cl3">
-										 <script>getDate('${avo.auction_cdate.toString().substring(0,10)}','${avo.auction_date.toString().substring(0,10)}')</script>
+									<c:if test="${avo.auction_bidok!=1 }">
+										 <script>getDate('${avo.auction_cdate.toString().substring(0,10)}')</script>
+									</c:if>
 									</span>
 									<span class="stext-105 cl3" style="color:gray; font-size:13px;">
 										조회수 ${avo.auction_viewcount }회
 									</span>
 								</div>
 								
-	
-								<div class="block2-txt-child2 flex-r p-t-3" id="${avo.auction_no}">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<div class="block2-txt-child2 flex-r p-t-3" id="${avo.auction_no}" >
+									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" style="margin-right:10px;">
 										<img class="icon-heart1 dis-block trans-04" src="/resources/images/icons/icon-heart-01.png" alt="ICON">
 										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/resources/images/icons/icon-heart-02.png" alt="ICON">
 									</a>
@@ -142,7 +169,6 @@
 							</div>
 						</div>
 					</div>
-	
 				</c:forEach>
 	</div>
 	</div>

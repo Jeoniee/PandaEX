@@ -59,7 +59,7 @@ $(function() {
 						</ol>
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-								<img src="${vo.uploadFile }" alt="사진없음">
+								<img src="${vo.uploadFile }" onerror="this.src='/resources/images/cat.jpg';">
 							</div>
 						</div>
 					</div>
@@ -146,11 +146,13 @@ $(function() {
 						<div class="row">
 							<div class="col p-0">
 								<a class="btn btn-warning btn-lg btn-block py-3 loginControl" 
-									href="/payment/pay_page?goods_no=${vo.goods_no }&goods_price=${vo.goods_price }" role="button">
+									href="/payment/pay_page?goods_no=${vo.goods_no }" role="button">
 									<i class="fa-sharp fa-solid fa-paper-plane"></i> 판다페이 결제하기 </a>
 							</div>
 							<div class="col">
-								<a type="button" class="btn btn-success btn-lg btn-block py-3 loginControl"  
+								<a type="button" class=
+								
+								"btn btn-success btn-lg btn-block py-3 loginControl"  
 								   id="chat" >
 				                   <i class="fa-solid fa-gavel pr-2"></i> 1:1 채팅하기
 				                </a>
@@ -188,7 +190,7 @@ $(function() {
 					<div class="row ml-3 pb-3 border-bottom">
 						<div class="col-2">
 							<img id="profile" class="rounded-circle"
-								src="/resources/image/default_attachment.jpg">
+								src="/resources/images/member.jpg">
 						</div>
 						<div class="col ml-4">
 							<h6 class="row fw-bold mb-2">${vo.user_nick }</h6>
@@ -266,9 +268,10 @@ $(function() {
 		</script>
 <style>
 .carousel-item img {
-	object-fit: cover;
-	height: 26em;
-	border-radius: 1rem;
+    object-fit: cover;
+    height: 100%;
+    border-radius: 1rem;
+    width: 100%;
 }
 .carousel-item {
 	transition: transform .1s ease;
